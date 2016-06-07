@@ -1,0 +1,14 @@
+{
+  "name": "try-mean-todo",
+  "version": "0.0.1",
+  "description": "Simple todo app",
+  "main": "server.js",
+  "author": "abarinoff",
+  "dependencies": {
+    "express": "latest",
+    "mongoose": "latest",
+    "morgan": "latest",
+    "body-parser": "latest",
+    "method-override": "latest"
+  }
+}
