@@ -14,9 +14,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.json({ type: 'application/vnd.api+json' }));
 app.use(methodOverride());
 
-// var todoRouter = require('./app/routers/todo.router');
-var bearRouter = require('./app/routers/bear.router');
-app.use('/api', bearRouter);
+app.get('/', function(req, res) {
+    res.sendfile('index.html');
+});
+
+var todoRouter = require('./app/routers/todo.router');
+app.use('/api', todoRouter);
 
 app.listen(8080);
 console.log("App listening on port 8080");

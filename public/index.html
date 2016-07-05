@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="todo">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>ToDo application</title>
+
+        <link href="components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    </head>
+
+    <body ng-controller="todoPageController" ng-init="getTodos()">
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">TODO'S</a>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="text-center">What would you like to do?</div>
+                    <form ng-submit="createTodo()">
+                        <div class="form-group">
+                            <input type="text" class="form-control" ng-model="text">
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="todo in todos">
+                            {{todo.text}}
+                            <button type="button" class="close" ng-click="deleteTodo(todo._id)"><span>&times;</span></button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <script src="components/jquery/dist/jquery.min.js"></script>
+        <script src="components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="components/angular/angular.min.js"></script>
+        <script src="components/angular-resource/angular-resource.min.js"></script>
+
+        <script src="js/models/models.js"></script>
+        <script src="js/models/todo.model.js"></script>
+
+        <script src="js/controllers/controllers.js"></script>
+        <script src="js/controllers/todo.page.controller.js"></script>
+
+        <script src="js/application.js"></script>
+    </body>
+</html>

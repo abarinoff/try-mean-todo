@@ -4,37 +4,66 @@ var Todo = require('../models/todo.model');
 var TodoRouter = express.Router();
 
 TodoRouter.use(function(request, response, next) {
-    console.log('Operation with Todo');
+    console.log('### Operation with Todo ###');
     next();
 });
 
-TodoRouter.route("/api/todos")
+TodoRouter.route("/todos")
     .get(function(request, response) {
         Todo.find(function(error, todos) {
             if (error) response.send(error);
             response.json(todos);
         });
-    }).post(function(request, response) {
-        Todo.create({
-            text : req.body.text,
-            done : false
-        }, function(error, todo) {
-            if (error) response.send(error);
-
-            Todo.find(function(error, todos) {
-                if (error) response.send(error)
-                response.json(todos);
-            });
+    })
+    .post(function(req, res) {
+        console.log("text", req.body.text);
+        var todo = new Todo({
+            text: req.body.text,
+            done: false
         });
-     });/*.delete(function(request, response) {
+
+        todo.save(function(err) {
+            if(err) res.send(err);
+            else Todo.find(function(err, todos) {
+                if (err) res.send(err);
+                res.json(todos);
+            });
+        })
+    });
+
+TodoRouter.route('/todos/:id')
+    .get(function(req, res) {
+        Todo.findById(req.params.id, function(err, todo) {
+            if(err) res.send(err);
+            else res.json(todo);
+        });
+    })
+    .put(function(req, res) {
+        Bear.findById(req.params.id, function(err, todo) {
+            if(err) res.send(err);
+            else {
+                todo.text = req.body.text;
+                todo.save(function(err) {
+                    if (err) res.send(err);
+                    else Todo.find(function(err, todos) {
+                        if (err) res.send(err);
+                        res.json(todos);
+                    });
+                });
+            }
+        });
+    })
+    .delete(function(req, res) {
         Todo.remove({
-            _id : request.params.todo_id
+            _id: req.params.id
         }, function(err, todo) {
-            if (err) response.send(err);
-
-            Todo.find(function(error, todos) {
-                if (error) response.send(error)
-                response.json(todos);
-            });
+            if (err) res.send(err);
+            else Todo.find(function(err, todos) {
+                if (err) res.send(err);
+                res.json(todos);
+            })
         });
-}   );*/
+    });
+
+
+module.exports = TodoRouter;
